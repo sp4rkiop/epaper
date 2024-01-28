@@ -26,19 +26,12 @@ jobs:
     - name: Run script
       run: python hindustan.py
 
-    - name: Install GitHub CLI
-      run: |
-        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
-        sudo apt-add-repository https://cli.github.com/packages
-        sudo apt-get update
-        sudo apt-get install gh
-
-    - name: Commit changes
-      run: |
-        git config user.name "GitHub Actions"
-        git config user.email "actions@users.noreply.github.com"
-        git add .
-        git commit -m "Update PDF [skip ci]"
-        gh auth login --with-token "${{ secrets.GITHUB_TOKEN }}"
-        gh repo create-comment -R ${{ github.repository }} -B ${{ github.sha }} --body "PDF updated by GitHub Actions."
-        gh push
+    - name: Add & Commit changes
+      uses: EndBug/add-and-commit@v9.1.4
+      with:
+        add: '.'  # Specify the files to add (use '.' to add all changes)
+        author_name: "GitHub Actions"
+        author_email: "actions@users.noreply.github.com"
+        commit: "--signoff"
+        message: "Update PDF [skip ci]"
+        push: "true"
