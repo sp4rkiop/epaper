@@ -26,9 +26,6 @@ jobs:
     - name: Run script
       run: python hindustan.py
 
-    - name: Set up GitHub CLI
-      uses: actions/setup-gh@v1
-
     - name: Commit changes
       run: |
         git config user.name "GitHub Actions"
