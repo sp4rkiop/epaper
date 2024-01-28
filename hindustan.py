@@ -43,7 +43,7 @@ if api_data and isinstance(api_data, list):
                 image_data.append(image)
 
 # Create a PDF using img2pdf
-pdf_filename = "Hindustan Dhanbad.pdf"
+pdf_filename = "Hindustan-Dhanbad.pdf"
 
 if image_data:
     with open(pdf_filename, "wb") as pdf_file:
