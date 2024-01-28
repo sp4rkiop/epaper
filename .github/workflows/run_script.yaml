@@ -26,6 +26,13 @@ jobs:
     - name: Run script
       run: python hindustan.py
 
+    - name: Install GitHub CLI
+      run: |
+        sudo apt-key adv --keyserver keyserver.ubuntu.com --recv-key C99B11DEB97541F0
+        sudo apt-add-repository https://cli.github.com/packages
+        sudo apt-get update
+        sudo apt-get install gh
+
     - name: Commit changes
       run: |
         git config user.name "GitHub Actions"
