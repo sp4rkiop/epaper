@@ -1,0 +1,39 @@
+name: Run Script Daily
+
+on:
+  schedule:
+    - cron: '0 5 * * *'
+
+jobs:
+  run_script:
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    - name: Set up Python
+      uses: actions/setup-python@v5
+      with:
+        python-version: '3.12'
+
+    - name: Install dependencies
+      run: |
+        python -m pip install --upgrade pip
+        pip install -r requirements.txt  # Add this line if you have any dependencies
+
+    - name: Run script
+      run: python hindustan.py
+
+    - name: Set up GitHub CLI
+      uses: actions/setup-gh@v1
+
+    - name: Commit changes
+      run: |
+        git config user.name "GitHub Actions"
+        git config user.email "actions@users.noreply.github.com"
+        git add .
+        git commit -m "Update PDF [skip ci]"
+        gh auth login --with-token "${{ secrets.GITHUB_TOKEN }}"
+        gh repo create-comment -R ${{ github.repository }} -B ${{ github.sha }} --body "PDF updated by GitHub Actions."
+        gh push
